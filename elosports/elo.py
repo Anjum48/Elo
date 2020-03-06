@@ -18,34 +18,38 @@ class Elo:
         """
         self.ratingDict[name] = rating
 
-    def game_over(self, winner_name, loser_name, location):
+    def game_over(self, winner, loser, location):
         """
         Update ratings after a game
-        :param winner_name: Name of the winning team
-        :param loser_name: Name of the losing team
+        :param winner: Name of the winning team
+        :param loser: Name of the losing team
         :param location: 'H' if the winner location is home, 'A' for away, 'N' for neutral
         :return:
         """
         if location == 'H':
-            result = self.expected_result(self.ratingDict[winner_name] + self.home_advantage,
-                                          self.ratingDict[loser_name])
+            result = self.expected_result(self.ratingDict[winner] + self.home_advantage,
+                                          self.ratingDict[loser])
         elif location == 'A':
-            result = self.expected_result(self.ratingDict[winner_name],
-                                          self.ratingDict[loser_name] + self.home_advantage)
+            result = self.expected_result(self.ratingDict[winner],
+                                          self.ratingDict[loser] + self.home_advantage)
         else:
-            result = self.expected_result(self.ratingDict[winner_name], self.ratingDict[loser_name])
+            result = self.expected_result(self.ratingDict[winner], self.ratingDict[loser])
 
-        self.ratingDict[winner_name] = self.ratingDict[winner_name] + (self.k * self.g) * (1 - result)
-        self.ratingDict[loser_name] = self.ratingDict[loser_name] + (self.k * self.g) * (0 - (1 - result))
+        self.ratingDict[winner] = self.ratingDict[winner] + (self.k * self.g) * (1 - result)
+        self.ratingDict[loser] = self.ratingDict[loser] + (self.k * self.g) * (0 - (1 - result))
 
-    def expected_result(self, player_a, player_b):
+    def expected_result(self, pr_a, pr_b, names=False):
         """
         See https://en.wikipedia.org/wiki/Elo_rating_system#Mathematical_details
-        :param player_a: player A name
-        :param player_b: player B name
+        :param pr_a: player A performance rating or names
+        :param pr_b: player B performance rating or names
+        :param names: Flag to indicate if the inputs re names or performance ratings
         :return: Expected score
         """
-        pr_a = self.ratingDict[player_a]
-        pr_b = self.ratingDict[player_b]
-        exp = (pr_a - pr_b) / 400.0
+
+        if names:
+            pr_a = self.ratingDict[pr_a]
+            pr_b = self.ratingDict[pr_b]
+
+        exp = (pr_b - pr_a) / 400.0
         return 1 / ((10.0 ** exp) + 1)

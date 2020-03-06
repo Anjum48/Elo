@@ -4,9 +4,9 @@ The elo formula is a method of ranking chess players by calculating relative ski
 ```python
 from elosports.elo import Elo
 eloLeague = Elo(k=20)
-eloLeague.addPlayer("Daniel", rating=1600)
-eloLeague.addPlayer("Harry")
-eloLeague.expectResult(eloLeague.ratingDict['Daniel'],eloLeague.ratingDict['Harry'])
+eloLeague.add_player("Daniel", rating=1600)
+eloLeague.add_player("Harry")
+eloLeague.expect_result(eloLeague.ratingDict['Daniel'], eloLeague.ratingDict['Harry'])
 ```
 
 The difference in ratings (relative score) determines the probability of victory in a potential match-up.  After a result concludes, the difference determines how many points the victor gains and defeated loses.  A few points transfer from the loser to the winner when the higher rated player wins. Many points transfer when the lower-rated player wins.
@@ -36,11 +36,11 @@ Home-field advantage is pre-determined. In the NBA and NFL, FiveThirtyEight give
 The formula for determining the expected probabilistic score can found: 
 https://en.wikipedia.org/wiki/Elo_rating_system
 ```python
-eloLeague.expectResult('Daniel', 'Harry')
+eloLeague.expected_result('Daniel', 'Harry', names=True)
 ```
 ## Update Rankings
 ```python
-eloLeague.gameOver(winner = "Daniel", loser="Harry")
+eloLeague.game_over(winner="Daniel", loser="Harry")
 ```
 ## Tutorial
 A tutorial with NFL (American football) simulated Elo rankings can be found in the tutorial section.
