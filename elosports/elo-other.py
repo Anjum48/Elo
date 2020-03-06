@@ -44,7 +44,7 @@ def elo_prediction(home_rating, away_rating):
     
 
 def score_prediction(home_rating, away_rating):
-    return (home_rating - away_rating)/28.
+    return (home_rating - away_rating) / 28.
 
 
 class EloSimulation(object):
@@ -56,6 +56,7 @@ class EloSimulation(object):
         self.predictions = []
         self.curr_season = defaultdict(lambda: self.games[0][1][label_dict['year_id']])
         self.end_of_season_correction = end_of_season_correction
+        self.carry_over = 0.75
 
     def train(self):
         for idx, game in self.games:
@@ -71,10 +72,11 @@ class EloSimulation(object):
                 
             if self.curr_season[label_i] != new_year:
                 self.curr_season[label_i] = new_year
-                self.ratings[label_i] = self.ratings[label_i]*.6+1505.*.4
+                self.ratings[label_i] = self.ratings[label_i] * self.carry_over + 1505. * (1 - self.carry_over)
             elif self.curr_season[label_j] != new_year:
                 self.curr_season[label_j] = new_year
-                self.ratings[label_j] = self.ratings[label_j]*.6+1505.*.4
+                self.ratings[label_j] = self.ratings[label_j] * self.carry_over + 1505. * (1 - self.carry_over)
+
             self.predictions.append(elo_prediction(self.ratings[label_i]+100, self.ratings[label_j]))
             
             # TODO change below to just use event

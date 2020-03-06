@@ -25,7 +25,7 @@ class Elo:
             result = self.expectResult(self.ratingDict[winner], self.ratingDict[loser])
 
         self.ratingDict[winner] = self.ratingDict[winner] + (self.k*self.g)*(1 - result)
-        self.ratingDict[loser] 	= self.ratingDict[loser] + (self.k*self.g)*(0 - (1 - result))
+        self.ratingDict[loser] = self.ratingDict[loser] + (self.k*self.g)*(0 - (1 - result))
 
     def expectResult(self, p1, p2):
         exp = (p2-p1) / 400.0
