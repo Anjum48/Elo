@@ -4,6 +4,7 @@ import pandas as pd
 
 
 def k_factor(margin_of_victory, elo_diff):
+    # https://fivethirtyeight.com/features/introducing-nfl-elo-ratings/ (see footnote 2)
     init_k = 20
     if margin_of_victory > 0:
         multiplier = (margin_of_victory+3) ** 0.8 / (7.5 + 0.006 * elo_diff)
@@ -44,6 +45,7 @@ def elo_prediction(home_rating, away_rating):
     
 
 def score_prediction(home_rating, away_rating):
+    # https://fivethirtyeight.com/features/introducing-nfl-elo-ratings/ (see footnote 1)
     return (home_rating - away_rating) / 28.
 
 
@@ -106,7 +108,7 @@ if __name__ == '__main__':
     }
 
     # https://github.com/fivethirtyeight/data/blob/master/nba-elo/nbaallelo.csv
-    full_df = pd.read_csv("../../elo-simulations/nbaallelo.csv")
+    full_df = pd.read_csv("../tutorial/nbaallelo.csv")
     games = full_df[full_df['game_location'] == 'H']  # remove duplicated rows work with our elo implementation
     games['SEASON'] = games['year_id'].apply(lambda x: "%s-%s" % (x-1, x))
     
