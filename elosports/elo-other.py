@@ -104,7 +104,8 @@ if __name__ == '__main__':
         'pts': "pts",
         'opp_pts': "opp_pts"
     }
-    
+
+    # https://github.com/fivethirtyeight/data/blob/master/nba-elo/nbaallelo.csv
     full_df = pd.read_csv("../../elo-simulations/nbaallelo.csv")
     games = full_df[full_df['game_location'] == 'H']  # remove duplicated rows work with our elo implementation
     games['SEASON'] = games['year_id'].apply(lambda x: "%s-%s" % (x-1, x))

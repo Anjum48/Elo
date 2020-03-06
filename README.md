@@ -3,8 +3,8 @@ The elo formula is a method of ranking chess players by calculating relative ski
 
 ```python
 from elosports.elo import Elo
-eloLeague = Elo(k = 20)
-eloLeague.addPlayer("Daniel", rating = 1600)
+eloLeague = Elo(k=20)
+eloLeague.addPlayer("Daniel", rating=1600)
 eloLeague.addPlayer("Harry")
 eloLeague.expectResult(eloLeague.ratingDict['Daniel'],eloLeague.ratingDict['Harry'])
 ```
@@ -16,19 +16,19 @@ The long-term average for teams is 1500 and values generally range from 1200 to 
 ## k-value
 
 ```python
-eloLeague = Elo(k = 20)
+eloLeague = Elo(k=20)
 ```
 The k-factor determines how the rating reacts to new results. If the value is set too high the ratings will jump around too much and set too low it will take a long time to recognize greatness.
 
 ## g-value
 ```python
-eloLeague = Elo(k= 20, g = 1)
+eloLeague = Elo(k= 20, g=1)
 ```
 The g-value or margin of value multiplier introduces a way of preventing autocorrelation.
 
 ## Home-field Advantage 
 ```python
-eloLeague = Elo(k = 20, homefield = 100)
+eloLeague = Elo(k=20, home_advantage=100)
 ```
 Home-field advantage is pre-determined. In the NBA and NFL, FiveThirtyEight gives home-court advantages of around 100 Elo points. In the case of two evenly-matched teams, Elo favors the home team.
 
@@ -36,11 +36,11 @@ Home-field advantage is pre-determined. In the NBA and NFL, FiveThirtyEight give
 The formula for determining the expected probabilistic score can found: 
 https://en.wikipedia.org/wiki/Elo_rating_system
 ```python
-eloLeague.expectResult(eloLeague.ratingDict['Daniel'],eloLeague.ratingDict['Harry'])
+eloLeague.expectResult('Daniel', 'Harry')
 ```
 ## Update Rankings
 ```python
-eloLeague.gameOver(winner = "Daniel, loser = "Harry")
+eloLeague.gameOver(winner = "Daniel", loser="Harry")
 ```
 ## Tutorial
 A tutorial with NFL (American football) simulated Elo rankings can be found in the tutorial section.
